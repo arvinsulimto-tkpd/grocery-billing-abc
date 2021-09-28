@@ -7,39 +7,21 @@ public class App
 	
 	public ArrayList<User> allUser = new ArrayList<User>();
 	public ArrayList<ItemShopDetail> itemShopDetailList = new ArrayList<ItemShopDetail>();
-	public User user = new User();
-	public ItemShop itemShop = new ItemShop();
-	public ItemShopDetail itemShopDetail = new ItemShopDetail();
-
 	
-	public void initValue() {
-		
-		itemShopDetail.setItemName("ITEM 1");
-		itemShopDetail.setItemPrice(2);
-		itemShopDetail.setItemSize(10);
-		itemShopDetailList.add(itemShopDetail);
-		
-		itemShopDetail = new ItemShopDetail();
-		itemShopDetail.setItemName("ITEM 2");
-		itemShopDetail.setItemPrice(3);
-		itemShopDetail.setItemSize(10);
-		itemShopDetailList.add(itemShopDetail);
-		
-		itemShop.setItem(itemShopDetailList);
-		itemShop.setPaymentMethod(PaymentEnum.CASH);
-		
-		user.setUserID("USER1");
-		user.setWantToBeMember(false);
-		user.setMember(true);
-		user.setItemShop(itemShop);
-		
-		allUser.add(user);
+	
+	public void initData() {
+		ItemShopDetail item1 = new ItemShopDetail.ItemShopDetailBuilder("Item 1", 2, 10).build();
+		ItemShopDetail item2 = new ItemShopDetail.ItemShopDetailBuilder("Item 2", 3, 10).build();
+		itemShopDetailList.add(item1);
+		itemShopDetailList.add(item2);
+		ItemShop itemShop = new ItemShop.ItemShopBuilder(itemShopDetailList, PaymentEnum.CREDIT_CARD).build();
+		User user = new User.UserBuilder("User 1", itemShop, false).build();
+		allUser.add(user);	
 	}
 	
 	public App() {
-		initValue();
+		initData();
 		for(User user : allUser) {
-
 			ArrayList<String>offerApplicable = new ArrayList<String>();
 			float totalAmount=0;
 			for(int i =0;i < user.getItemShop().getItem().size();i++) {
@@ -56,7 +38,7 @@ public class App
 
 			if(user.isWantToBeMember() && !user.isMember()) {
 				totalAmount+=100;
-				user.setMember(true);
+				user = new User.UserBuilder(user.getUserID(), user.getItemShop(), user.isWantToBeMember()).setMember(true).build();
 				offerApplicable.add("Want to Be a Member");
 			}
 			
@@ -70,7 +52,7 @@ public class App
 				offerApplicable.add("Payment More Than 100$");
 			}
 			
-			user.setOfferApplicable(offerApplicable);
+			user = new User.UserBuilder(user.getUserID(), user.getItemShop(), user.isWantToBeMember()).setOfferApplicableList(offerApplicable).build();
 			
 			System.out.println("=========BILLING========");
 			System.out.println("Total Base Bill Amount : "+baseTotalAmount);
@@ -89,6 +71,7 @@ public class App
 			}
 			System.out.println("===============================");
 			System.out.println("Final Amount : "+totalAmount);
+			System.out.println("===============================");
 		}
 	}
 	
