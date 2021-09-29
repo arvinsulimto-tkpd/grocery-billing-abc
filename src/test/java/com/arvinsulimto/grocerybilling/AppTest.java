@@ -1,12 +1,12 @@
 package com.arvinsulimto.grocerybilling;
 
+import com.arvinsulimto.grocerybilling.ItemShopDetail.ItemShopDetailBuilder;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
+
 public class AppTest 
     extends TestCase
 {
@@ -28,11 +28,36 @@ public class AppTest
         return new TestSuite( AppTest.class );
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    
+    public void testIsPaymentUsingCreditCard() {
+    	assertTrue(App.isPaymentUsingCreditCard(PaymentEnum.CREDIT_CARD));
     }
+    
+    public void testIsPaymentUsingNotCreditCard() {
+    	assertFalse(App.isPaymentUsingCreditCard(PaymentEnum.CASH));
+    }
+    
+    public void testIsMoreThan100$() {
+    	assertTrue(App.isMoreThan100$(105));
+    }
+    
+    public void testIsLessThan100$() {
+    	assertFalse(App.isMoreThan100$(50));
+    }
+    
+    public void testCalculatePricePerItem() {
+    	ItemShopDetail itemShopDetail = new ItemShopDetail.ItemShopDetailBuilder("Item 1", 2, 10).build();
+    	assertEquals(App.calculatePricePerItem(itemShopDetail), 20.0,0);
+    }
+    
+    public void testCalculateWhenUsingCreditCard() {
+    	assertEquals(App.calculateWhenUsingCreditCard(100), 102.0, 0);
+    }
+    
+    public void testCalculateWhenIsMember() {
+    	assertEquals(App.calculateWhenIsMember(100), 95.0, 0);
+    }
+    
+    
+    
 }

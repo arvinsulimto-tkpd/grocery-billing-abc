@@ -5,11 +5,11 @@ import java.util.*;
 public class App 
 {
 	
-	public ArrayList<User> allUser = new ArrayList<User>();
-	public ArrayList<ItemShopDetail> itemShopDetailList = new ArrayList<ItemShopDetail>();
+	public static ArrayList<User> allUser = new ArrayList<User>();
+	public static ArrayList<ItemShopDetail> itemShopDetailList = new ArrayList<ItemShopDetail>();
 	
 	
-	public void initData() {
+	public static void initData() {
 		ItemShopDetail item1 = new ItemShopDetail.ItemShopDetailBuilder("Item 1", 2, 10).build();
 		ItemShopDetail item2 = new ItemShopDetail.ItemShopDetailBuilder("Item 2", 3, 10).build();
 		itemShopDetailList.add(item1);
@@ -18,9 +18,29 @@ public class App
 		User user = new User.UserBuilder("User 1", itemShop, false).build();
 		allUser.add(user);	
 	}
+		
+	public static boolean isPaymentUsingCreditCard(PaymentEnum payment) {
+		return payment == PaymentEnum.CREDIT_CARD;
+	}
 	
-	public App() {
-		initData();
+	public static boolean isMoreThan100$(float totalAmount) {
+		return totalAmount > 100;
+	}
+	
+	public static float calculatePricePerItem(ItemShopDetail item) {
+		return (float)item.getItemPrice()*item.getItemSize();
+	}
+	
+	public static float calculateWhenUsingCreditCard(float totalAmount) {
+		return (((float)2/100)*totalAmount)+totalAmount;
+	}
+	
+	public static float calculateWhenIsMember(float totalAmount) {
+		return totalAmount-(((float)5/100)*totalAmount);
+	}
+	
+    public static void main(String[] args){
+    	initData();
 		for(User user : allUser) {
 			ArrayList<String>offerApplicable = new ArrayList<String>();
 			float totalAmount=0;
@@ -73,29 +93,5 @@ public class App
 			System.out.println("Final Amount : "+totalAmount);
 			System.out.println("===============================");
 		}
-	}
-	
-	public boolean isPaymentUsingCreditCard(PaymentEnum payment) {
-		return payment == PaymentEnum.CREDIT_CARD;
-	}
-	
-	public boolean isMoreThan100$(float totalAmount) {
-		return totalAmount > 100;
-	}
-	
-	public float calculatePricePerItem(ItemShopDetail item) {
-		return (float)item.getItemPrice()*item.getItemSize();
-	}
-	
-	public float calculateWhenUsingCreditCard(float totalAmount) {
-		return (((float)2/100)*totalAmount)+totalAmount;
-	}
-	
-	public float calculateWhenIsMember(float totalAmount) {
-		return totalAmount-(((float)5/100)*totalAmount);
-	}
-	
-    public static void main(String[] args){
-    	new App();
     }
 }
