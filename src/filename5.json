@@ -1,0 +1,111 @@
+{
+  "queryName": "GET : /prescription/fetch?checkout_id-valid checkout_id",
+  "serviceName": "userapp",
+  "apiName": "{host}/prescription/fetch?checkout_id={checkout_id}",
+  "httpMethod": "GET",
+  "userIdProduction": "-1",
+  "userIdStaging": 9118826,
+  "alertSlackGroup": "",
+  "testCaseDescription": "fetch prescription with valid checkout id",
+  "testCasePriority": "P0",
+  "filterKeys": [
+    "server_process_time"
+  ],
+  "paramMapForReqHeader": {
+    "Authorization": "access_token"
+  },
+  "customTransformerStaging": [
+    {
+      "transformVariable": "Authorization",
+      "transformFunction": "PrePendString",
+      "isHeaderTransform": true,
+      "transformFunctionInput": {
+        "prePendText": "Bearer "
+      }
+    }
+  ],
+  "customTransformerProduction": [
+    {
+      "transformVariable": "Authorization",
+      "transformFunction": "PrePendString",
+      "isHeaderTransform": true,
+      "transformFunctionInput": {
+        "prePendText": "Bearer "
+      }
+    }
+  ],
+  "query": "",
+  "structure": [
+    {
+      "env": "staging",
+      "apiParamMap": {
+        "host": "https://epharmacy-staging.tokopedia.com",
+        "checkout_id": "3301f8e08034d26aec0f8b3d01fd6c03",
+        "consulHost": ""
+      },
+      "variables": {},
+      "responseString": {
+        "header": {
+          "server_prosess_time": "183.210618ms",
+          "code": 200
+        },
+        "data": {
+          "checkout_id": "3301f8e08034d26aec0f8b3d01fd6c03",
+          "prescription_images": [
+            {
+              "prescription_id": 570,
+              "expired_at": "2022-07-28 10:57:27",
+              "status": "ACTIVE",
+              "prescription_data": {
+                "format": "FILE",
+                "value": "base64files"
+              },
+              "url": "http://uploadpedia-secure.service.aws-main-staging-ap-southeast-1-staging.consul/img/JQFRoy/2022/7/21/40b701a7-ac3d-46a6-9f73-092567d40508.jpg"
+            },
+            {
+              "prescription_id": 571,
+              "expired_at": "2022-07-28 10:57:27",
+              "status": "ACTIVE",
+              "prescription_data": {
+                "format": "FILE",
+                "value": "base64files"
+              },
+              "url": "http://uploadpedia-secure.service.aws-main-staging-ap-southeast-1-staging.consul/img/JQFRoy/2022/7/21/032399bd-96c3-42e5-bb39-adef92fe2921.jpg"
+            }
+          ],
+          "products_info": [
+            {
+              "shop_id": 6554231,
+              "shop_name": "epharmos",
+              "shop_type": "Official Store",
+              "shop_location": "Kab. Bekasi",
+              "shop_logo_url": "https://images.tokopedia.net/img/official_store/badge_os.png",
+              "products": [
+                {
+                  "product_id": 2150389388,
+                  "name": "obat batuk anak",
+                  "quantity": 1,
+                  "is_ethical_drug": true,
+                  "product_image": "https://ecs7.tokopedia.net/img/cache/200-square/VqbcmM/2022/6/22/e6a32861-5cc5-4fee-b4b7-f49c18eb6480.jpg",
+                  "item_weight": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "responseCode": 200
+    },
+    {
+      "env": "production",
+      "apiParamMap": {
+        "host": "https://epharmacy.tokopedia.com",
+        "checkout_id": "",
+        "consulHost": ""
+      },
+      "variables": {},
+      "responseString": {},
+      "responseCode": 200
+    }
+  ]
+}
